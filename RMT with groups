@@ -1,0 +1,50 @@
+#Create RMT with two groups of points 
+
+RMT_Groups <- function(df_group) {
+  
+  library(ggplot2)
+  
+  polygon_df <- data.frame(
+    x = df_group$carbohydrate,
+    y = df_group$fat,
+    group = df_group$group
+  )
+  
+  ggplot(df_group, aes(carbohydrate, fat, color = group, shape = group)) +
+    geom_abline(intercept = 100, slope = -1, size = 0.5) +
+    geom_point() +
+    geom_polygon(data = polygon_df, aes(x = x, y = y, group = group, color = group), 
+                 fill = "transparent", alpha = 0.2) +
+    labs(x = "Carbohydrate (%)", y = "Fat (%)", 
+         title = "Right Angled Mixture Triangle") +
+    theme_classic() +
+    scale_x_continuous(expand = c(0, 0), limits = c(0, 100)) + 
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 100)) +
+    theme(
+      plot.title = element_text(hjust = 0.5),
+      plot.caption = element_text(hjust = 1),
+      axis.text = element_text(size = 12),  
+      axis.title = element_text(size = 12), 
+      aspect.ratio = 1
+    ) +  
+    annotate("text", x = 52, y = 52, label = "[Protein (%)]", color = "black", 
+             hjust = 0.5, vjust = 0, size = 4, angle = atan(-1)/(2*pi)*360) +  
+    geom_abline(intercept = 25, slope = -1, color = "grey", size = 0.5, linetype = "dashed") +
+    geom_abline(intercept = 50, slope = -1, color = "grey", size = 0.5, linetype = "dashed") +
+    geom_abline(intercept = 75, slope = -1, color = "grey", size = 0.5, linetype = "dashed") +
+    annotate("text", x = 29, y = 0, label = "[75%]", color = "grey", size = 3, vjust = -1) +
+    annotate("text", x = 54, y = 0, label = "[50%]", color = "grey", size = 3, vjust = -1) +
+    annotate("text", x = 79, y = 0, label = "[25%]", color = "grey", size = 3, vjust = -1) +
+    annotate("text", x = 6, y = 0, label = "[100%]", color = "grey", size = 3, vjust = -1) +
+    scale_color_manual(name = "Group", values = c("red", "blue")) +
+    guides(shape = guide_legend(title = "Group", ncol = 2))  
+}
+
+df_group <- data.frame(
+  group = rep(c("A", "B"), each = 3),
+  carbohydrate = c(60, 30, 25, 50, 60, 10),
+  fat = c(10, 40, 25, 10, 20, 60),
+  protein = c(30, 30, 50, 40, 20, 30)
+)
+
+RMT_Groups(df_group)

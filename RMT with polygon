@@ -1,0 +1,44 @@
+#Connect all your points with a polygon
+
+RMT_Polygon <- function(data) {
+  
+  library(ggplot2)
+  
+  polygon_df <- data.frame(
+    x = df$carbohydrate,
+    y = df$fat
+  )
+  
+  ggplot(data, aes(carbohydrate, fat)) +
+    geom_abline(intercept = 100, slope = -1, size = 0.5) +
+    geom_point(aes(x = carbohydrate, y = fat)) +
+    geom_polygon(data = polygon_df, aes(x = x, y = y), fill = "blue", alpha = 0.2) +
+    labs(x = "Carbohydrate (%)", y = "Fat (%)", 
+         title = "Right Angled Mixture Triangle") +
+    theme_classic() +
+    scale_x_continuous(expand = c(0, 0), limits = c(0,100)) + 
+    scale_y_continuous(expand = c(0, 0), limits = c(0,100)) +
+    theme(
+      plot.title = element_text(hjust = 0.5),
+      plot.caption = element_text(hjust = 1),
+      axis.text = element_text(size = 12),  # Adjust the size of axis text
+      axis.title = element_text(size = 12),  # Adjust the size of axis titles
+      aspect.ratio = 1
+    ) + 
+    annotate("text", x = 52, y = 52, label = "[Protein (%)]", color = "black", 
+             hjust = 0.5, vjust = 0, size = 4, angle = atan(-1)/(2*pi)*360) +  
+    geom_abline(intercept = 25, slope = -1, color = "grey", size = 0.5, linetype = "dashed") +
+    geom_abline(intercept = 50, slope = -1, color = "grey", size = 0.5, linetype = "dashed") +
+    geom_abline(intercept = 75, slope = -1, color = "grey", size = 0.5, linetype = "dashed") +
+    annotate("text", x = 29, y = 0, label = "[75%]", color = "grey", size = 3, vjust = -1) +
+    annotate("text", x = 54, y = 0, label = "[50%]", color = "grey", size = 3, vjust = -1) +
+    annotate("text", x = 79, y = 0, label = "[25%]", color = "grey", size = 3, vjust = -1) +
+    annotate("text", x = 6, y = 0, label = "[100%]", color = "grey", size = 3, vjust = -1) 
+}
+
+df <- data.frame(
+  carbohydrate = c(50, 40, 50),
+  fat = c(30, 20, 20)
+)
+
+RMT_Polygon(df)

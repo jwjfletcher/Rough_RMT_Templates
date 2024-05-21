@@ -34,7 +34,7 @@ RMT <- function(data) {
 df <- data.frame(
   carbohydrate = c(50, 40, 50),
   fat = c(30, 20, 20),
-  label = c("A", "B", "C")  # Add labels for points A, B, and C
+  label = c("A", "B", "C") 
 )
 
 RMT(df)

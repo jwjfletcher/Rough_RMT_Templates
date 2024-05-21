@@ -21,8 +21,8 @@ RMT_Polygon <- function(data) {
     theme(
       plot.title = element_text(hjust = 0.5),
       plot.caption = element_text(hjust = 1),
-      axis.text = element_text(size = 12),  # Adjust the size of axis text
-      axis.title = element_text(size = 12),  # Adjust the size of axis titles
+      axis.text = element_text(size = 12),  
+      axis.title = element_text(size = 12), 
       aspect.ratio = 1
     ) + 
     annotate("text", x = 52, y = 52, label = "[Protein (%)]", color = "black", 
